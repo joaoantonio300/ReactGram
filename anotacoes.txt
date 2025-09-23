@@ -1,0 +1,27 @@
+npm init -y
+- instalar alguns pacotes
+
+npm i bcryptjs cors dotenv express express-validator jsonwebtoken mongoose multer
+- bcryptjs          - permite a gente ter uma melhor manipulação de senhas com javascript;
+- dotenv            - variaveis de ambiente de nossa aplicacao (dominio, banco de dados);
+- express           - framework backend para criacao de apis;
+- express-validator - é como se fosse um middleware, vai trabalhar entre as requisicoes para validar os dados (MVC);
+- jsonwebtoken      - gerar e verificar os tokens para a gente autenticar o usuario ou deixar o token ativo;
+- mongoose          - a ferramenta que vai utilizar para trabalhar com o banco de dados;
+- multer            - é uma ferramenta que a gente vai utilizar para trabalhar com o upload de fotos ou imagens;
+
+npm i --save-dev nodemon
+- dependencia de dev que simula um servidor local que tem uma funcao de carregamento de codigo automatico  
+
+
+CONTEITOS GERAL NODE
+
+- dirname : é uma variavel global do Node que guarda o caminho absoluto da pasta onde está seu arquivo atual;
+- path.join: junta caminhso de forma segura ( sem se preocupar se é "/" ou "\")
+
+mongoose
+
+- Para coneção no banco iremos pesquisar por mongodb atlas;
+- Depois de acessar minha conta, entrar no cluster gratuito e setar um usuario iremos para o proximo passo
+- Basicamente setar quais isp poderao acessar esse banco ( por enquanto podemos adicionar o nosso local)
+- Após isso posso clicar em conect, e copia a string de conexao
