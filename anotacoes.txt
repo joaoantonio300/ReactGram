@@ -1,4 +1,4 @@
-npm init -y
+ npm init -y
 - instalar alguns pacotes
 
 npm i bcryptjs cors dotenv express express-validator jsonwebtoken mongoose multer
@@ -25,3 +25,15 @@ mongoose
 - Depois de acessar minha conta, entrar no cluster gratuito e setar um usuario iremos para o proximo passo
 - Basicamente setar quais isp poderao acessar esse banco ( por enquanto podemos adicionar o nosso local)
 - Após isso posso clicar em conect, e copia a string de conexao
+
+front-end
+
+ npm i react-redux
+ - intalamos essa dependencia no front-end que serve basicamente par aum banco de dados global
+ dentro do react
+ - para isso eu precisei criar um arquivo global chamado "store.js"
+ - com isso eu tenho que usar o redux dentro do index.js
+
+ SOBRE O REDUX
+
+ -  slices: basicamente a gente opode separar vários tipos de estados unsando redux, e a pasta de slices é justamente para isso 

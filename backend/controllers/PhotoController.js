@@ -164,7 +164,7 @@ const likePhoto = async (req, res) => {
 // Comment functionality
 const commentPhoto = async (req, res) => {
   const { id } = req.params;
-  const { comment } = req.body;
+  const { comment } = req.body || {};
 
   const reqUser = req.user;
 
@@ -177,7 +177,7 @@ const commentPhoto = async (req, res) => {
     return;
   }
 
-  //  Put commet in the array comments
+  // Put commet in the array comments
   const userComment = {
     comment,
     userName: user.name,
@@ -190,9 +190,19 @@ const commentPhoto = async (req, res) => {
   await photo.save();
 
   res.status(200).json({
-    commet: userComment,
+    comment: userComment,
     message: "O comentário foi adicionado com sucesso!",
   });
+};
+
+// Search photos by title
+const searchPhotos = async (req, res) => {
+  const { q } = req.query;
+
+  // i dont know why use this, then i have to search
+  const photos = await Photo.find({ title: new RegExp(q, "i")}).exec();
+
+  res.status(200).json(photos);
 };
 
 module.exports = {
@@ -203,4 +213,6 @@ module.exports = {
   getPhotoById,
   updatePhoto,
   likePhoto,
+  commentPhoto,
+  searchPhotos,
 };

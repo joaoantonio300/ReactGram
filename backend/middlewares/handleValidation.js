@@ -2,18 +2,18 @@ const { validationResult } = require("express-validator");
 
 // search more about express-validator
 const validate = (req, res, next) => {
-  const erros = validationResult(req);
+  const errors = validationResult(req);
 
-  if (erros.isEmpty()) {
+  if (errors.isEmpty()) {
     return next();
   }
 
   const extractedErros = [];
 
-  erros.array().map((err) => extractedErros.push(err.msg));
+  errors.array().map((err) => extractedErros.push(err.msg));
 
   return res.status(422).json({
-    erros: extractedErros,
+    errors: extractedErros,
   });
 };
 

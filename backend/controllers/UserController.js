@@ -23,7 +23,7 @@ const register = async (req, res) => {
 
   // here i verify if user exists
   if (user) {
-    res.status(422).json({ erros: ["Por favor, utilize outro e-mail"] });
+    res.status(422).json({ errors: ["Por favor, utilize outro e-mail"] });
     return;
   }
 
@@ -43,7 +43,7 @@ const register = async (req, res) => {
   if (!newUser) {
     res
       .status(422)
-      .json({ erros: ["Houve um erro, por favor teste mais tarde."] });
+      .json({ errors: ["Houve um erro, por favor teste mais tarde."] });
     return;
   }
 
@@ -62,13 +62,13 @@ const login = async (req, res) => {
 
   //Check if user exists
   if (!user) {
-    res.status(404).json({ erros: ["Usuário não encontardo."] });
+    res.status(404).json({ errors: ["Usuário não encontardo."] });
     return;
   }
 
   //Check if password matches
   if (!(await bcrypt.compare(password, user.password))) {
-    res.status(422).json({ erros: ["Senha inválida."] });
+    res.status(422).json({ errors: ["Senha inválida."] });
     return;
   }
 
@@ -147,9 +147,9 @@ const getUserById = async (req, res) => {
     }
 
     res.status(200).json(user);
-  } catch (error) {
-    res.status(404).json({ errros: ["Usuário não encontrado."] });
 
+  } catch (error) {
+    res.status(404).json({ errors: ["Usuário não encontrado."] });
     return;
   }
 };
