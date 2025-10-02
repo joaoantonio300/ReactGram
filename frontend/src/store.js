@@ -5,7 +5,7 @@ import userReducer from './slices/userSlice';
 
 export const store = configureStore({
   reducer: {
-    // Here i can add my reducers for use theyQ\  
+    // Here i can add my reducers for use they
     auth: authReducer,
     user: userReducer,
   },

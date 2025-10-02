@@ -52,7 +52,9 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           value={password || ""}
         />
-        
+        {!loading && <input type="submit" value="Entrar" />}
+        {loading && <input type="submit" disabled value="Aguarde..." />}
+        {error && <Message msg={error} type="error" />}
       </form>
       <p>
         Não tem uma conta? <Link to="/register"> Clique aqui</Link>
