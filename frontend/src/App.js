@@ -16,6 +16,7 @@ import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import EditProfile from "./pages/EditProfile/EditProfile";
 import Profile from "./pages/Profile/Profile";
+import Photo from "./pages/Photo/Photo";
 
 function App() {
   // i can see in authAlice about the way like we get the user
@@ -54,6 +55,10 @@ function App() {
               element={!auth ? <Register /> : <Navigate to="/" />}
             />
             <Route path="*" element={<Navigate to="/" />} />
+            <Route
+              path="/photos/:id"
+              element={auth ? <Photo /> : <Navigate to="/login" />}
+            />
           </Routes>
         </div>
         <Footer />
