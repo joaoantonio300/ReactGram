@@ -28,6 +28,9 @@ mongoose
 
 front-end
 
+npm install react-icons
+- icones do bootstrap via React Icons
+
  npm i react-redux
  - intalamos essa dependencia no front-end que serve basicamente par aum banco de dados global
  dentro do react
