@@ -46,6 +46,17 @@ const Photo = () => {
   // Inserting Comments
   const handleComment = (e) => {
     e.preventDefault();
+
+    const commentData = {
+      comment: commentText,
+      id: photo._id,
+    };
+
+    dispatch(comment(commentData));
+
+    setCommentText("");
+
+    resetMessage();
   };
 
   if (loading) {

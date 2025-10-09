@@ -109,8 +109,8 @@ const Profile = () => {
 
     const photoData = {
       title: editTitle,
-      id: editId
-    }
+      id: editId,
+    };
 
     dispatch(updatePhoto(photoData));
 
