@@ -7,39 +7,31 @@ const mongoose = require("mongoose");
 
 const jwtSecret = process.env.JWT_SECRET;
 
-// Generate user token
 const generateToken = (id) => {
   return jwt.sign({ id }, jwtSecret, {
     expiresIn: "7d",
   });
 };
 
-// Register user and sign in
 const register = async (req, res) => {
   const { name, email, password } = req.body;
 
-  // check if user exists
   const user = await User.findOne({ email });
 
-  // here i verify if user exists
   if (user) {
     res.status(422).json({ errors: ["Por favor, utilize outro e-mail"] });
     return;
   }
 
-  // Generate password hash
-  // To search more about salt methods (bcrypt)
   const salt = await bcrypt.genSalt();
   const passwordHash = await bcrypt.hash(password, salt);
 
-  // Create user ( and a new password )
   const newUser = await User.create({
     name,
     email,
     password: passwordHash,
   });
 
-  //If user was created sucessfully, return the token
   if (!newUser) {
     res
       .status(422)
@@ -47,32 +39,27 @@ const register = async (req, res) => {
     return;
   }
 
-  // if no one error ocurred then i send to user your token to acess your new account
   res.status(201).json({
     _id: newUser._id,
     token: generateToken(newUser._id),
   });
 };
 
-// Sign in
 const login = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
 
-  //Check if user exists
   if (!user) {
     res.status(404).json({ errors: ["Usuário não encontardo."] });
     return;
   }
 
-  //Check if password matches
   if (!(await bcrypt.compare(password, user.password))) {
     res.status(422).json({ errors: ["Senha inválida."] });
     return;
   }
 
-  //Return user with token
   res.status(201).json({
     _id: user._id,
     profileImage: user.profileImage,
@@ -80,14 +67,12 @@ const login = async (req, res) => {
   });
 };
 
-// Get current logged in user
 const getCurrentUser = async (req, res) => {
   const user = req.user;
 
   res.status(200).json(user);
 };
 
-// Update an user
 const update = async (req, res) => {
   const { name, password, bio } = req.body;
 
@@ -99,8 +84,6 @@ const update = async (req, res) => {
 
   const reqUser = req.user;
 
-  // the string of mongo is a string, then we have to turn that on object
-
   const user = await User.findById(
     new mongoose.Types.ObjectId(reqUser._id)
   ).select("-password");
@@ -110,7 +93,6 @@ const update = async (req, res) => {
   }
 
   if (password) {
-    // Generate password hash
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
 
@@ -130,7 +112,6 @@ const update = async (req, res) => {
   res.status(200).json(user);
 };
 
-// Get user by id
 const getUserById = async (req, res) => {
   const { id } = req.params;
 
@@ -139,15 +120,12 @@ const getUserById = async (req, res) => {
       mongoose.Types.ObjectId.createFromHexString(id)
     ).select("-password");
 
-    // Check if user exists
-
     if (!mongoose.Types.ObjectId.isValid(user)) {
       res.status(400).json({ errors: [`Identificação incorreta do usuário.`] });
       return;
     }
 
     res.status(200).json(user);
-
   } catch (error) {
     res.status(404).json({ errors: ["Usuário não encontrado."] });
     return;

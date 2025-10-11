@@ -74,7 +74,6 @@ const Profile = () => {
       image,
     };
 
-    // build form data
     const formData = new FormData();
 
     const photoFormData = Object.keys(photoData).forEach((key) =>

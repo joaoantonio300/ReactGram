@@ -20,7 +20,6 @@ import Photo from "./pages/Photo/Photo";
 import Search from "./pages/Search/Search";
 
 function App() {
-  // i can see in authAlice about the way like we get the user
   const { auth, loading } = useAuth();
 
   if (loading) {
@@ -60,7 +59,7 @@ function App() {
               path="/search"
               element={auth ? <Search /> : <Navigate to="/login" />}
             />
-              <Route
+            <Route
               path="/photos/:id"
               element={auth ? <Photo /> : <Navigate to="/login" />}
             />

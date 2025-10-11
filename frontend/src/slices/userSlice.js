@@ -44,7 +44,6 @@ export const updateProfile = createAsyncThunk(
 export const getUserDetails = createAsyncThunk(
   "user/get",
   async (id, thunkAPI) => {
-
     const data = await userService.getUserDetails(id);
 
     return data;
@@ -97,7 +96,7 @@ export const userSlice = createSlice({
         state.error = null;
         state.success = true;
         state.user = action.payload;
-      })
+      });
   },
 });
 

@@ -25,7 +25,6 @@ const Search = () => {
   const { user } = useSelector((state) => state.auth);
   const { photos, loading } = useSelector((state) => state.photo);
 
-  // Load photos
   useEffect(() => {
     dispatch(searchPhotos(search));
   }, [dispatch, search]);

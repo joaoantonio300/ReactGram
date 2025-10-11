@@ -32,11 +32,10 @@ const Register = () => {
     };
 
     console.log(user);
-  
+
     dispatch(register(user));
   };
 
-  //aways the dispatch was calling, we can call reset by redux
   useEffect(() => {
     dispatch(reset());
   }, [dispatch]);

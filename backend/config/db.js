@@ -5,7 +5,6 @@ const dbPassword = process.env.DB_PASS;
 const conn = async () => {
   try {
     const dbConn = await mongoose.connect(
-        // está com `` pq é usado para concatenacao com variaveis
       `mongodb+srv://${dbUser}:${dbPassword}@users.1svy3fw.mongodb.net/?retryWrites=true&w=majority&appName=Users`
     );
 

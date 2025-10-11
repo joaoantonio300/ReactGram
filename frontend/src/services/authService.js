@@ -26,7 +26,6 @@ const logout = () => {
 
 // Sign in an user
 const login = async (data) => {
-  // i believe that we can improve that instead use await with then
   const config = requestConfig("POST", data);
 
   try {

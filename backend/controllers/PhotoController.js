@@ -3,7 +3,6 @@ const User = require("../models/User");
 
 const mongoose = require("mongoose");
 
-// Insert a photo, with an user related to it
 const insertPhoto = async (req, res) => {
   const { title } = req.body;
   const image = req.file.filename;
@@ -12,7 +11,6 @@ const insertPhoto = async (req, res) => {
 
   const user = await User.findById(reqUser._id);
 
-  // Create a photo
   const newPhoto = await Photo.create({
     image,
     title,
@@ -20,7 +18,6 @@ const insertPhoto = async (req, res) => {
     userName: user.name,
   });
 
-  // if photo was created successfully, return data
   if (!newPhoto) {
     res.status(422).json({
       errors: ["Houve um problema, por favor tente novamente mais tarde."],
@@ -31,7 +28,6 @@ const insertPhoto = async (req, res) => {
   res.status(201).json(newPhoto);
 };
 
-// Remove a photo from DB
 const deletePhoto = async (req, res) => {
   const { id } = req.params;
   const reqUser = req.user;
@@ -39,13 +35,11 @@ const deletePhoto = async (req, res) => {
   try {
     const photo = await Photo.findById(id);
 
-    // Check if photo exists
     if (!photo) {
       res.status(404).json({ errors: ["Foto não encontrada!"] });
       return;
     }
 
-    // Check if photo belongs to user
     if (!photo.userId.equals(reqUser._id)) {
       res.status(422).json({
         errors: ["Ocorreu um erro, por favor tente novamente mais tarde."],
@@ -65,9 +59,7 @@ const deletePhoto = async (req, res) => {
   }
 };
 
-// Get all photos
 const getAllPhotos = async (req, res) => {
-  // after end up, to search more about this code
   const photos = await Photo.find({})
     .sort([["createdAt", -1]])
     .exec();
@@ -75,7 +67,6 @@ const getAllPhotos = async (req, res) => {
   return res.status(200).json(photos);
 };
 
-// Get user photos
 const getUserPhotos = async (req, res) => {
   const { id } = req.params;
 
@@ -86,12 +77,10 @@ const getUserPhotos = async (req, res) => {
   return res.status(200).json(photos);
 };
 
-// Get photo by id
 const getPhotoById = async (req, res) => {
   const { id } = req.params;
   const photo = await Photo.findById(id);
 
-  // Check if photo exists
   if (!photo) {
     res.status(404).json({ errors: ["Foto não encontrada."] });
     return;
@@ -100,7 +89,6 @@ const getPhotoById = async (req, res) => {
   return res.status(200).json(photo);
 };
 
-// Update a photo
 const updatePhoto = async (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
@@ -114,7 +102,6 @@ const updatePhoto = async (req, res) => {
     return;
   }
 
-  // Check if photo belongs to user
   if (!photo.userId.equals(reqUser._id)) {
     res.status(422).json({
       errors: ["Ocorreu um erro, por favor tente novamente mais tarde."],
@@ -131,7 +118,6 @@ const updatePhoto = async (req, res) => {
   res.status(200).json({ photo, message: "Foto atualizada com sucesso!" });
 };
 
-// Like functionanlity
 const likePhoto = async (req, res) => {
   const { id } = req.params;
 
@@ -139,19 +125,16 @@ const likePhoto = async (req, res) => {
 
   const photo = await Photo.findById(id);
 
-  // Check if photo exists
   if (!photo) {
     res.status(404).json({ errors: ["Foto não encontrada."] });
     return;
   }
 
-  // Check if user already liked the photo
   if (photo.likes.includes(reqUser._id)) {
     res.status(422).json({ errors: ["Você já curtiu a photo."] });
     return;
   }
 
-  // Put user id in likes array
   photo.likes.push(reqUser._id);
 
   photo.save();
@@ -161,7 +144,6 @@ const likePhoto = async (req, res) => {
     .json({ photoId: id, userId: reqUser._id, message: "A foto foi curtida." });
 };
 
-// Comment functionality
 const commentPhoto = async (req, res) => {
   const { id } = req.params;
   const { comment } = req.body || {};
@@ -177,7 +159,6 @@ const commentPhoto = async (req, res) => {
     return;
   }
 
-  // Put commet in the array comments
   const userComment = {
     comment,
     userName: user.name,
@@ -195,12 +176,10 @@ const commentPhoto = async (req, res) => {
   });
 };
 
-// Search photos by title
 const searchPhotos = async (req, res) => {
   const { q } = req.query;
 
-  // i dont know why use this, then i have to search
-  const photos = await Photo.find({ title: new RegExp(q, "i")}).exec();
+  const photos = await Photo.find({ title: new RegExp(q, "i") }).exec();
 
   res.status(200).json(photos);
 };
